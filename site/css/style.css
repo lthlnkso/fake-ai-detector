@@ -337,9 +337,10 @@ body {
 }
 
 .watermark {
-    font-size: 13px;
-    font-weight: 600;
-    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 700;
+    color: #6b7280;
+    letter-spacing: 0.3px;
 }
 
 /* ===== Explanation Section ===== */
