@@ -29,48 +29,77 @@ const HIGHLIGHT_RULES = [
 const CATCHALL_LABEL = "Distributional anomaly detected";
 const CATCHALL_COLOR = "highlight-pink";
 
+// Build a map from term ID to character offset in the original text
+function buildTermOffsets(doc, text) {
+    const termList = doc.termList();
+    const offsets = {};
+    let searchFrom = 0;
+
+    for (const term of termList) {
+        // Each term has pre (leading whitespace), text, post (trailing whitespace)
+        // Find the term text in the original string
+        const fullTerm = term.pre + term.text + term.post;
+        const idx = text.indexOf(term.text, searchFrom);
+        if (idx === -1) continue;
+
+        offsets[term.id] = {
+            start: idx,
+            end: idx + term.text.length
+        };
+        searchFrom = idx + term.text.length;
+    }
+    return offsets;
+}
+
 function analyzeTextContent(text) {
     if (typeof nlp === "undefined") {
         return fallbackAnalysis(text);
     }
 
     const doc = nlp(text);
+    const termOffsets = buildTermOffsets(doc, text);
     const spans = [];
-    const claimed = new Set();
+    const claimedChars = new Set();
 
     // Process each rule
     for (const rule of HIGHLIGHT_RULES) {
         const matches = doc.match(rule.pattern);
-        matches.forEach((m) => {
-            const offset = m.offset();
-            if (!offset || !offset.length) return;
+        const matchData = matches.json();
 
-            const info = offset[0];
-            const start = info.index;
-            const length = info.length;
+        for (const m of matchData) {
+            if (!m.terms || m.terms.length === 0) continue;
 
-            // Check for overlap with already-claimed characters
+            const firstTerm = m.terms[0];
+            const lastTerm = m.terms[m.terms.length - 1];
+            const firstOffset = termOffsets[firstTerm.id];
+            const lastOffset = termOffsets[lastTerm.id];
+            if (!firstOffset || !lastOffset) continue;
+
+            const start = firstOffset.start;
+            const end = lastOffset.end;
+
+            // Check overlap
             let overlaps = false;
-            for (let i = start; i < start + length; i++) {
-                if (claimed.has(i)) { overlaps = true; break; }
+            for (let i = start; i < end; i++) {
+                if (claimedChars.has(i)) { overlaps = true; break; }
             }
-            if (overlaps) return;
+            if (overlaps) continue;
 
-            // Claim these characters
-            for (let i = start; i < start + length; i++) {
-                claimed.add(i);
+            // Claim characters
+            for (let i = start; i < end; i++) {
+                claimedChars.add(i);
             }
 
             spans.push({
                 start: start,
-                end: start + length,
+                end: end,
                 label: rule.label,
                 color: rule.color
             });
-        });
+        }
     }
 
-    // Fill unclaimed regions with catch-all
+    // Sort spans and fill gaps with catch-all
     spans.sort((a, b) => a.start - b.start);
     const finalSpans = [];
     let pos = 0;
@@ -122,7 +151,6 @@ function analyzeTextContent(text) {
 }
 
 function fallbackAnalysis(text) {
-    // If compromise.js fails to load, do simple sentence-level highlighting
     const sentences = text.split(/(?<=[.!?])\s+/);
     const colors = ["highlight-red", "highlight-orange", "highlight-purple", "highlight-blue", "highlight-yellow", "highlight-pink"];
     const labels = [
