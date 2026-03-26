@@ -45,6 +45,19 @@ body {
     margin-top: 2px;
 }
 
+.promo-claim {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 20px;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 20px;
+}
+
 /* Input Area */
 .input-area {
     background: #fff;
