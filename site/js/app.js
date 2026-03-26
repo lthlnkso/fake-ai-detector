@@ -55,11 +55,11 @@ function analyzeText() {
     const delay = 1500 + Math.random() * 1000;
 
     setTimeout(() => {
-        // Collapse the input area
+        // Collapse the input area and scroll after collapse finishes
         collapseInput();
-
-        // Scroll results into view
-        resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+            resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 420);
 
         // Update model prediction
         document.getElementById("model-name").textContent = `${model.name} (${model.vendor})`;
