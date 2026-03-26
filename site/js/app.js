@@ -11,6 +11,23 @@ textInput.addEventListener("input", () => {
 const gaugeContainer = document.getElementById("gauge");
 createGauge(gaugeContainer);
 
+// Collapsible input area
+const inputArea = document.querySelector(".input-area");
+const expandBtn = document.getElementById("expand-btn");
+
+function collapseInput() {
+    inputArea.classList.add("collapsed");
+    expandBtn.classList.remove("hidden");
+}
+
+function expandInput() {
+    inputArea.classList.remove("collapsed");
+    expandBtn.classList.add("hidden");
+    textInput.focus();
+}
+
+expandBtn.addEventListener("click", expandInput);
+
 function analyzeText() {
     const text = textInput.value.trim();
     if (!text) return;
@@ -38,6 +55,12 @@ function analyzeText() {
     const delay = 1500 + Math.random() * 1000;
 
     setTimeout(() => {
+        // Collapse the input area
+        collapseInput();
+
+        // Scroll results into view
+        resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+
         // Update model prediction
         document.getElementById("model-name").textContent = `${model.name} (${model.vendor})`;
 

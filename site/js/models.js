@@ -1,24 +1,34 @@
 const AI_MODELS = [
-    { name: "GPT-4o", vendor: "OpenAI" },
+    // OpenAI
+    { name: "ChatGPT-5 mini", vendor: "OpenAI" },
+    { name: "GPT-OSS 120B", vendor: "OpenAI" },
+    { name: "GPT-OSS 20B", vendor: "OpenAI" },
     { name: "GPT-4o mini", vendor: "OpenAI" },
-    { name: "o1", vendor: "OpenAI" },
-    { name: "o1-mini", vendor: "OpenAI" },
     { name: "o3-mini", vendor: "OpenAI" },
-    { name: "GPT-4.5", vendor: "OpenAI" },
-    { name: "Claude 3.5 Sonnet", vendor: "Anthropic" },
+    // Anthropic
+    { name: "Claude 4.5 Sonnet", vendor: "Anthropic" },
+    { name: "Claude Opus 4", vendor: "Anthropic" },
     { name: "Claude 3.5 Haiku", vendor: "Anthropic" },
-    { name: "Claude 3 Opus", vendor: "Anthropic" },
-    { name: "Gemini 1.5 Pro", vendor: "Google" },
-    { name: "Gemini 1.5 Flash", vendor: "Google" },
-    { name: "Gemini 2.0 Flash", vendor: "Google" },
+    // Google
+    { name: "Gemini 3 Flash", vendor: "Google" },
+    { name: "Gemini 2.5 Flash", vendor: "Google" },
+    { name: "Gemini 2.5 Flash Lite", vendor: "Google" },
     { name: "Gemini 2.5 Pro", vendor: "Google" },
-    { name: "Llama 3.1 405B", vendor: "Meta" },
-    { name: "Llama 3.3 70B", vendor: "Meta" },
-    { name: "Mistral Large", vendor: "Mistral AI" },
-    { name: "DeepSeek V3", vendor: "DeepSeek" },
+    // xAI
+    { name: "Grok 4.1", vendor: "xAI" },
+    { name: "Grok 4", vendor: "xAI" },
+    { name: "Grok Code", vendor: "xAI" },
+    // DeepSeek
+    { name: "DeepSeek V3.2", vendor: "DeepSeek" },
     { name: "DeepSeek R1", vendor: "DeepSeek" },
-    { name: "Qwen 2.5 72B", vendor: "Alibaba" },
-    { name: "Command R+", vendor: "Cohere" },
+    // Meta
+    { name: "Llama 3.1 405B", vendor: "Meta" },
+    { name: "Llama 4", vendor: "Meta" },
+    // Others
+    { name: "Mistral Nemo", vendor: "Mistral AI" },
+    { name: "Kimi K2.5", vendor: "Moonshot AI" },
+    { name: "MiniMax M2.5", vendor: "MiniMax" },
+    { name: "Qwen 3 235B", vendor: "Alibaba" },
 ];
 
 function getRandomModel() {
