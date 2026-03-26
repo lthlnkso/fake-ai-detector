@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlwaysAI - AI Content Detector</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Section 1: The Screenshot Section -->
+    <div class="screenshot-section">
+        <div class="container">
+            <header class="site-header">
+                <h1 class="site-logo">AlwaysAI<span class="logo-dot">.</span></h1>
+                <p class="site-tagline">Advanced AI Content Detection</p>
+            </header>
+
+            <div class="input-area">
+                <textarea id="text-input" placeholder="Paste your text here to check if it was written by AI..." rows="6"></textarea>
+                <div class="input-footer">
+                    <span id="char-count-input">0 characters</span>
+                    <button id="analyze-btn" onclick="analyzeText()">Detect AI Text</button>
+                </div>
+            </div>
+
+            <div id="results-panel" class="results-panel hidden">
+                <div class="results-header">
+                    <h2>Your Text is AI/GPT Generated</h2>
+                </div>
+
+                <div class="gauge-container">
+                    <div id="gauge"></div>
+                </div>
+
+                <div class="model-prediction">
+                    <span class="prediction-label">Identified Source Model:</span>
+                    <span id="model-name" class="prediction-value"></span>
+                    <span class="prediction-confidence">Confidence: <strong>Very High</strong></span>
+                </div>
+
+                <div id="highlighted-text" class="highlighted-text"></div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(239, 68, 68, 0.25)"></span>
+                        Predictive phrasing pattern
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(234, 179, 8, 0.25)"></span>
+                        AI-characteristic modifier
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(168, 85, 247, 0.25)"></span>
+                        LLM transition pattern
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(59, 130, 246, 0.25)"></span>
+                        Modeled verb pattern
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(250, 204, 21, 0.25)"></span>
+                        AI sentence opener
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(236, 72, 153, 0.25)"></span>
+                        Distributional anomaly
+                    </div>
+                </div>
+
+                <div class="results-footer">
+                    <div class="stats">
+                        <span id="char-count">0 Characters</span>
+                        <span class="stats-sep">|</span>
+                        <span id="word-count">0 Words</span>
+                    </div>
+                    <div class="watermark">alwaysai.com</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: The Explanation Section -->
+    <div class="explanation-section">
+        <div class="container">
+            <div class="parody-notice">
+                <h2>This is a parody.</h2>
+                <p>
+                    You've probably seen the posts: someone pastes a passage from Frankenstein, the Declaration of Independence,
+                    or the Bible into an AI detector, gets a "100% AI" result, screenshots it, and posts it with a caption like
+                    "AI detectors are useless." The post goes viral. Thousands of likes. Case closed, apparently.
+                </p>
+                <p>
+                    This site does exactly what those bad detectors do &mdash; it flags <em>everything</em> as AI-generated.
+                    That's the joke. If your standard for discrediting AI detection is "I found one that doesn't work,"
+                    congratulations: you've proven that bad tools exist. That's not the gotcha you think it is.
+                </p>
+            </div>
+
+            <div class="real-detection">
+                <h2>But real AI detection actually works.</h2>
+                <p>
+                    Not all AI detectors are created equal. While this parody site will happily tell you that
+                    Shakespeare was ghostwriting for GPT-4, serious research-backed detectors have achieved
+                    remarkable accuracy with near-zero false positive rates.
+                </p>
+
+                <div class="pangram-card">
+                    <h3>Pangram Labs</h3>
+                    <p class="pangram-subtitle">Research-grade AI detection that actually works</p>
+
+                    <div class="evidence-grid">
+                        <div class="evidence-item">
+                            <div class="evidence-stat">99.8%+</div>
+                            <div class="evidence-desc">
+                                Accuracy across all models and writing types in an independent evaluation by the
+                                <strong>University of Chicago Becker Friedman Institute</strong>. For most models,
+                                accuracy was 100%.
+                            </div>
+                            <div class="evidence-source">
+                                <a href="https://bfi.uchicago.edu/insights/artificial-writing-and-automated-detection/" target="_blank" rel="noopener">Source: UChicago BFI</a>
+                            </div>
+                        </div>
+
+                        <div class="evidence-item">
+                            <div class="evidence-stat">1st Place</div>
+                            <div class="evidence-desc">
+                                Tied for first in the <strong>COLING 2025 RAID benchmark</strong> (organized by
+                                UPenn, QCRI, and MBZUAI), achieving 99.3% true positive rate &mdash; even against
+                                adversarial attacks.
+                            </div>
+                            <div class="evidence-source">
+                                <a href="https://arxiv.org/abs/2501.08913" target="_blank" rel="noopener">Source: arXiv:2501.08913</a>
+                            </div>
+                        </div>
+
+                        <div class="evidence-item">
+                            <div class="evidence-stat">0.01% FPR</div>
+                            <div class="evidence-desc">
+                                A false positive rate of just 1 in 10,000 &mdash; and <strong>0% false positives</strong>
+                                on the TOEFL English as a Foreign Language benchmark, critical for protecting
+                                non-native English speakers.
+                            </div>
+                            <div class="evidence-source">
+                                <a href="https://arxiv.org/abs/2402.14873" target="_blank" rel="noopener">Source: arXiv:2402.14873</a>
+                            </div>
+                        </div>
+
+                        <div class="evidence-item">
+                            <div class="evidence-stat">Superhuman</div>
+                            <div class="evidence-desc">
+                                Researchers at the <strong>University of Maryland</strong> found Pangram is the
+                                only AI detector that outperforms trained human experts at identifying AI-generated text.
+                            </div>
+                            <div class="evidence-source">
+                                <a href="https://www.pangram.com/blog/russell" target="_blank" rel="noopener">Source: Russell et al. (UMD)</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://pangram.com" class="pangram-cta" target="_blank" rel="noopener">
+                        Try Pangram Labs &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <footer class="site-footer">
+                <p>
+                    AlwaysAI is a parody. No actual AI detection is performed.
+                    Built to make a point, not to detect anything.
+                </p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/compromise"></script>
+    <script src="js/models.js"></script>
+    <script src="js/gauge.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
