@@ -580,4 +580,9 @@ body {
         gap: 8px;
         text-align: center;
     }
+
+    .results-header h2 {
+        font-size: 18px;
+        padding-right: 36px;
+    }
 }
