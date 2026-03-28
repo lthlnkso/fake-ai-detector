@@ -459,6 +459,16 @@ body {
     text-decoration: underline;
 }
 
+.pangram-inline-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.pangram-inline-link:hover {
+    text-decoration: underline;
+}
+
 .pangram-cta {
     display: inline-block;
     background: #2563eb;
@@ -469,6 +479,7 @@ body {
     font-weight: 600;
     font-size: 15px;
     transition: background 0.2s;
+    margin-bottom: 20px;
 }
 
 .pangram-cta:hover {

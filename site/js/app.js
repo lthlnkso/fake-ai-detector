@@ -1,6 +1,6 @@
 // Referral click tracking
 document.addEventListener('click', function(e) {
-    const link = e.target.closest('#pangram-cta');
+    const link = e.target.closest('a[href*="pangram.com"]');
     if (link) {
         try {
             navigator.sendBeacon('/api/referral-click');
