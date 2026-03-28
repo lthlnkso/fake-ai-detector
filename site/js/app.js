@@ -11,28 +11,39 @@ function captureResults() {
         backgroundColor: '#ffffff',
         scale: 2,
         useCORS: true,
-    }).then(canvas => {
+    }).then(function(canvas) {
         captureBtn.style.visibility = '';
 
-        // Try clipboard first, with Safari-compatible Promise pattern
-        if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
-            const blobPromise = new Promise(resolve => {
-                canvas.toBlob(resolve, 'image/png');
-            });
+        // Try clipboard first, fall back to download
+        var clipboardOk = false;
+        try {
+            if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
+                clipboardOk = true;
+            }
+        } catch (_) {}
 
-            navigator.clipboard.write([
-                new ClipboardItem({ 'image/png': blobPromise })
-            ]).then(() => {
-                showToast(toast, 'Copied to clipboard!');
-            }).catch(() => {
+        if (clipboardOk) {
+            try {
+                var blobPromise = new Promise(function(resolve) {
+                    canvas.toBlob(resolve, 'image/png');
+                });
+                navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blobPromise })
+                ]).then(function() {
+                    showToast(toast, 'Copied to clipboard!');
+                }).catch(function() {
+                    downloadCanvas(canvas);
+                    showToast(toast, 'Screenshot saved!');
+                });
+            } catch (_) {
                 downloadCanvas(canvas);
                 showToast(toast, 'Screenshot saved!');
-            });
+            }
         } else {
             downloadCanvas(canvas);
             showToast(toast, 'Screenshot saved!');
         }
-    }).catch(() => {
+    }).catch(function() {
         captureBtn.style.visibility = '';
         showToast(toast, 'Capture failed');
     });
