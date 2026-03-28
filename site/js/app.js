@@ -1,3 +1,72 @@
+// Screenshot capture
+function captureResults() {
+    const resultsPanel = document.getElementById('results-panel');
+    const captureBtn = document.getElementById('capture-btn');
+    const toast = document.getElementById('capture-toast');
+
+    // Hide the button so it doesn't appear in the screenshot
+    captureBtn.style.visibility = 'hidden';
+
+    html2canvas(resultsPanel, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        useCORS: true,
+    }).then(canvas => {
+        captureBtn.style.visibility = '';
+
+        // Try clipboard first, with Safari-compatible Promise pattern
+        if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
+            const blobPromise = new Promise(resolve => {
+                canvas.toBlob(resolve, 'image/png');
+            });
+
+            navigator.clipboard.write([
+                new ClipboardItem({ 'image/png': blobPromise })
+            ]).then(() => {
+                showToast(toast, 'Copied to clipboard!');
+            }).catch(() => {
+                downloadCanvas(canvas);
+                showToast(toast, 'Screenshot saved!');
+            });
+        } else {
+            downloadCanvas(canvas);
+            showToast(toast, 'Screenshot saved!');
+        }
+    }).catch(() => {
+        captureBtn.style.visibility = '';
+        showToast(toast, 'Capture failed');
+    });
+}
+
+function downloadCanvas(canvas) {
+    canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'callallai-result.png';
+        a.click();
+        URL.revokeObjectURL(url);
+    }, 'image/png');
+}
+
+function showToast(toast, message) {
+    toast.textContent = message;
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 2000);
+}
+
+// Referral click tracking
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('#pangram-cta');
+    if (link) {
+        try {
+            navigator.sendBeacon('/api/referral-click');
+        } catch (_) {
+            // Silently fail on local dev (no server to receive beacon)
+        }
+    }
+});
+
 // Update character count on input
 const textInput = document.getElementById("text-input");
 const charCountInput = document.getElementById("char-count-input");

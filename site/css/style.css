@@ -190,12 +190,62 @@ body {
 .results-header {
     text-align: center;
     margin-bottom: 8px;
+    position: relative;
 }
 
 .results-header h2 {
     font-size: 20px;
     font-weight: 700;
     color: #1f2937;
+}
+
+.capture-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.capture-btn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+    border-color: #9ca3af;
+}
+
+.capture-btn:active {
+    background: #e5e7eb;
+}
+
+.capture-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: #1f2937;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.capture-toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
 }
 
 /* Gauge */

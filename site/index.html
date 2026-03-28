@@ -67,7 +67,15 @@
             <div id="results-panel" class="results-panel hidden">
                 <div class="results-header">
                     <h2>Your Text is AI/GPT Generated</h2>
+                    <button id="capture-btn" class="capture-btn" onclick="captureResults()" title="Copy screenshot to clipboard">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <circle cx="12" cy="13" r="3"/>
+                            <path d="M9.5 7h5"/>
+                        </svg>
+                    </button>
                 </div>
+                <div id="capture-toast" class="capture-toast"></div>
 
                 <div class="gauge-container">
                     <div id="gauge"></div>
@@ -198,7 +206,7 @@
                         </div>
                     </div>
 
-                    <a href="https://pangram.com" class="pangram-cta" target="_blank" rel="noopener">
+                    <a href="https://pangram.com?ref=callallai" class="pangram-cta" target="_blank" rel="noopener" id="pangram-cta">
                         Try Pangram Labs &rarr;
                     </a>
 
@@ -220,6 +228,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://unpkg.com/compromise"></script>
     <script src="js/models.js"></script>
     <script src="js/gauge.js"></script>
